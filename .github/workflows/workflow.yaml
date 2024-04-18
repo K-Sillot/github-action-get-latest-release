@@ -6,34 +6,39 @@ jobs:
   build:
     name: Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        string:
+          - repo_name: "github-action-get-latest-release"
+            repo_owner: "K-Sillot"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - run: npm i
       - uses: ./
         with:
-          repository: pozetroninc/github-action-get-latest-release
+          repository: ${{ matrix.string.repo_owner }}/${{ matrix.string.repo_name }}
       - uses: ./
         with:
-          owner: pozetroninc
-          repo: github-action-get-latest-release
+          owner: ${{ matrix.string.repo_owner }}
+          repo: ${{ matrix.string.repo_name }}
       - uses: ./
         with:
-          owner: pozetroninc
-          repo: github-action-get-latest-release
+          owner: ${{ matrix.string.repo_owner }}
+          repo: ${{ matrix.string.repo_name }}
           excludes: prerelease, draft
       - uses: ./
         with:
-          repository: pozetroninc/github-action-get-latest-release
+          repository: ${{ matrix.string.repo_owner }}/${{ matrix.string.repo_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ./
         with:
-          owner: pozetroninc
-          repo: github-action-get-latest-release
+          owner: ${{ matrix.string.repo_owner }}
+          repo: ${{ matrix.string.repo_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ./
         with:
-          owner: pozetroninc
-          repo: github-action-get-latest-release
+          owner: ${{ matrix.string.repo_owner }}
+          repo: ${{ matrix.string.repo_name }}
           excludes: prerelease, draft
           token: ${{ secrets.GITHUB_TOKEN }}
